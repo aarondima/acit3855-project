@@ -1,0 +1,47 @@
+2025-02-05 21:23:27,646 - basicLogger - DEBUG - Stored event temperature_condition with a trace id of 5b3f9127-42bf-475f-b1c1-0d759fc0e539
+2025-03-13 13:49:49,955 - basicLogger - INFO - Payload: {'sensorId': '32049', 'eventID': '1232311', 'temperature': 35.0, 'timestamp': '2025-01-15T08:30:00+00:00', 'cityZone': 'Main', 'trace_id': '251823e7-ab5d-448b-86f2-5a156214570b'}
+2025-03-13 13:49:49,956 - basicLogger - INFO - {'sensorId': '32049', 'eventID': '1232311', 'temperature': 35.0, 'timestamp': '2025-01-15T08:30:00+00:00', 'cityZone': 'Main', 'trace_id': '251823e7-ab5d-448b-86f2-5a156214570b'}
+2025-03-13 13:49:49,981 - basicLogger - DEBUG - Stored event temperature_condition with a trace id of 251823e7-ab5d-448b-86f2-5a156214570b
+2025-03-13 13:49:54,387 - basicLogger - DEBUG - Querying temperature events from 2025-03-13 20:23:33.056170+00:00 to 2025-03-13 20:49:51.936593+00:00
+2025-03-13 13:49:54,398 - basicLogger - DEBUG - Found 1 temperature events
+2025-03-13 13:49:56,812 - basicLogger - DEBUG - Querying traffic events from 2025-03-13 20:23:33.056170+00:00 to 2025-03-13 20:49:51.936593+00:00
+2025-03-13 13:49:56,824 - basicLogger - DEBUG - Found 0 traffic events
+2025-03-13 13:50:04,314 - basicLogger - DEBUG - Querying temperature events from 2025-03-13 20:49:51.936593+00:00 to 2025-03-13 20:50:01.924887+00:00
+2025-03-13 13:50:04,317 - basicLogger - DEBUG - Found 0 temperature events
+2025-03-13 13:50:06,803 - basicLogger - DEBUG - Querying traffic events from 2025-03-13 20:49:51.936593+00:00 to 2025-03-13 20:50:01.924887+00:00
+2025-03-13 13:50:06,805 - basicLogger - DEBUG - Found 0 traffic events
+2025-03-13 13:50:14,330 - basicLogger - DEBUG - Querying temperature events from 2025-03-13 20:50:01.924887+00:00 to 2025-03-13 20:50:11.923192+00:00
+2025-03-13 13:50:14,333 - basicLogger - DEBUG - Found 0 temperature events
+2025-03-13 13:50:16,745 - basicLogger - DEBUG - Querying traffic events from 2025-03-13 20:50:01.924887+00:00 to 2025-03-13 20:50:11.923192+00:00
+2025-03-13 13:50:16,748 - basicLogger - DEBUG - Found 0 traffic events
+2025-03-13 13:50:24,332 - basicLogger - DEBUG - Querying temperature events from 2025-03-13 20:50:11.923192+00:00 to 2025-03-13 20:50:21.929777+00:00
+2025-03-13 13:50:24,336 - basicLogger - DEBUG - Found 0 temperature events
+2025-03-13 13:50:26,742 - basicLogger - DEBUG - Querying traffic events from 2025-03-13 20:50:11.923192+00:00 to 2025-03-13 20:50:21.929777+00:00
+2025-03-13 13:50:26,745 - basicLogger - DEBUG - Found 0 traffic events
+2025-03-13 13:50:34,345 - basicLogger - DEBUG - Querying temperature events from 2025-03-13 20:50:21.929777+00:00 to 2025-03-13 20:50:31.926951+00:00
+2025-03-13 13:50:34,348 - basicLogger - DEBUG - Found 0 temperature events
+2025-03-13 13:50:36,739 - basicLogger - DEBUG - Querying traffic events from 2025-03-13 20:50:21.929777+00:00 to 2025-03-13 20:50:31.926951+00:00
+2025-03-13 13:50:36,742 - basicLogger - DEBUG - Found 0 traffic events
+2025-03-13 13:50:44,296 - basicLogger - DEBUG - Querying temperature events from 2025-03-13 20:50:31.926951+00:00 to 2025-03-13 20:50:41.938182+00:00
+2025-03-13 13:50:44,299 - basicLogger - DEBUG - Found 0 temperature events
+2025-03-13 13:50:46,707 - basicLogger - DEBUG - Querying traffic events from 2025-03-13 20:50:31.926951+00:00 to 2025-03-13 20:50:41.938182+00:00
+2025-03-13 13:50:46,709 - basicLogger - DEBUG - Found 0 traffic events
+2025-03-13 13:50:54,372 - basicLogger - DEBUG - Querying temperature events from 2025-03-13 20:50:41.938182+00:00 to 2025-03-13 20:50:51.928012+00:00
+2025-03-13 13:50:54,374 - basicLogger - DEBUG - Found 0 temperature events
+2025-03-13 13:50:56,782 - basicLogger - DEBUG - Querying traffic events from 2025-03-13 20:50:41.938182+00:00 to 2025-03-13 20:50:51.928012+00:00
+2025-03-13 13:50:56,786 - basicLogger - DEBUG - Found 0 traffic events
+2025-03-13 13:51:04,398 - basicLogger - DEBUG - Querying temperature events from 2025-03-13 20:50:51.928012+00:00 to 2025-03-13 20:51:01.923993+00:00
+2025-03-13 13:51:04,401 - basicLogger - DEBUG - Found 0 temperature events
+2025-03-13 13:51:06,791 - basicLogger - DEBUG - Querying traffic events from 2025-03-13 20:50:51.928012+00:00 to 2025-03-13 20:51:01.923993+00:00
+2025-03-13 13:51:06,795 - basicLogger - DEBUG - Found 0 traffic events
+2025-03-13 13:51:11,875 - basicLogger - INFO - Payload: {'sensorId': '32049', 'eventID': '1232311', 'temperature': 35.0, 'timestamp': '2025-01-15T08:30:00+00:00', 'cityZone': 'Main', 'trace_id': '3dc88261-c15b-413f-b369-05c7e4e75af0'}
+2025-03-13 13:51:11,875 - basicLogger - INFO - {'sensorId': '32049', 'eventID': '1232311', 'temperature': 35.0, 'timestamp': '2025-01-15T08:30:00+00:00', 'cityZone': 'Main', 'trace_id': '3dc88261-c15b-413f-b369-05c7e4e75af0'}
+2025-03-13 13:51:11,894 - basicLogger - DEBUG - Stored event temperature_condition with a trace id of 3dc88261-c15b-413f-b369-05c7e4e75af0
+2025-03-13 13:51:14,353 - basicLogger - DEBUG - Querying temperature events from 2025-03-13 20:51:01.923993+00:00 to 2025-03-13 20:51:11.923559+00:00
+2025-03-13 13:51:14,358 - basicLogger - DEBUG - Found 1 temperature events
+2025-03-13 13:51:16,790 - basicLogger - DEBUG - Querying traffic events from 2025-03-13 20:51:01.923993+00:00 to 2025-03-13 20:51:11.923559+00:00
+2025-03-13 13:51:16,793 - basicLogger - DEBUG - Found 0 traffic events
+2025-03-13 13:51:24,309 - basicLogger - DEBUG - Querying temperature events from 2025-03-13 20:51:11.923559+00:00 to 2025-03-13 20:51:21.936011+00:00
+2025-03-13 13:51:24,312 - basicLogger - DEBUG - Found 0 temperature events
+2025-03-13 13:51:26,768 - basicLogger - DEBUG - Querying traffic events from 2025-03-13 20:51:11.923559+00:00 to 2025-03-13 20:51:21.936011+00:00
+2025-03-13 13:51:26,771 - basicLogger - DEBUG - Found 0 traffic events

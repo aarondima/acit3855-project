@@ -1,0 +1,133 @@
+openapi: 3.0.0
+info:
+  title: smart-city-api
+  description: The API for the Smart City IoT project
+  version: 1.0.0
+servers:
+- url: /
+paths:
+  /temperature/condition:
+    get:
+      tags:
+      - Temperature
+      summary: Retrieve temperature events within a time range
+      description: Fetch all temperature events recorded between the given timestamps.
+      operationId: app.get_temperature_events
+      parameters:
+        - name: start_timestamp
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date-time
+          description: The start of the time range (inclusive).
+        - name: end_timestamp
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date-time
+          description: The end of the time range (exclusive).
+      responses:
+        "200":
+          description: A list of temperature events within the specified time range.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TemperatureCondition'
+        "400":
+          description: Invalid timestamp format
+        "404":
+          description: No temperature events found
+
+  /traffic/condition:
+    get:
+      tags:
+      - Traffic
+      summary: Retrieve traffic events within a time range
+      description: Fetch all traffic events recorded between the given timestamps.
+      operationId: app.get_traffic_events
+      parameters:
+        - name: start_timestamp
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date-time
+          description: The start of the time range (inclusive).
+        - name: end_timestamp
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date-time
+          description: The end of the time range (exclusive).
+      responses:
+        "200":
+          description: A list of traffic events within the specified time range.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TrafficCondition'
+        "400":
+          description: Invalid timestamp format
+        "404":
+          description: No traffic events found
+
+components:
+  schemas:
+    TemperatureCondition:
+      required:
+      - sensorId
+      - temperature
+      - timestamp
+      - trace_id
+      type: object
+      properties:
+        trace_id:
+          type: string
+          format: uuid
+          description: Unique identifier for tracking the request.
+        sensorId:
+          type: string
+          description: Unique identifier for the temperature sensor.
+        timestamp:
+          type: string
+          format: date-time
+          description: Date and time the reading was captured.
+        temperature:
+          type: number
+          format: float
+          description: Temperature reading in degrees Celsius.
+        cityZone:
+          type: string
+          description: Zone or region of the city where the sensor is located.
+    TrafficCondition:
+      required:
+      - sensorId
+      - timestamp
+      - trafficDensity
+      - trace_id
+      type: object
+      properties:
+        trace_id:
+          type: string
+          format: uuid
+          description: Unique identifier for tracking the request.
+        sensorId:
+          type: string
+          description: Unique identifier for the traffic sensor or camera.
+        timestamp:
+          type: string
+          format: date-time
+          description: Date and time the event was captured.
+        trafficDensity:
+          type: number
+          description: Number of vehicles detected in the area.
+        incidentReport:
+          type: string
+          description: "Description of any incidents (e.g., accident, roadblock)."

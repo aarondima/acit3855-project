@@ -1,0 +1,125 @@
+openapi: 3.0.0
+info:
+  title: smart-city-api
+  description: The API for the Smart City IOT project
+  version: 1.0.0
+servers:
+- url: /
+paths:
+  /TemperatureEvent:
+    get:
+      tags:
+      - Temperature
+      summary: Returns the event of type temperature located at index
+      operationId: app.get_temperature
+      parameters:
+        - name: index
+          in: query
+          required: true
+          schema:
+            type: number
+            format: integer
+      responses:
+        "200":
+          description: Temperature event retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemperatureEvent'
+        "400":
+          description: Invalid index
+        "404":
+          description: Temperature event not found
+  /TrafficEvent:
+    get:
+      tags:
+      - Traffic
+      summary: Returns the event of type traffic located at index
+      operationId: app.get_traffic
+      parameters:
+        - name: index
+          in: query
+          required: true
+          schema:
+            type: number
+            format: integer
+      responses:
+        "200":
+          description: Traffic event retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrafficEvent'
+        "400":
+          description: Invalid index
+        "404":
+          description: Traffic event not found
+  /stats:
+    get:
+      tags:
+        - Statistics
+      summary: Returns statistics about the events in the queue
+      operationId: app.get_stats
+      responses:
+        "200":
+          description: Statistics retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Stats'
+
+components:
+  schemas:
+    TemperatureEvent:
+      required:
+        - sensorId
+        - temperature
+        - timestamp
+      type: object
+      properties:
+        sensorId:
+          type: string
+          description: Unique identifier for the temperature sensor.
+        timestamp:
+          type: string
+          format: date-time
+          description: Date and time the reading was captured.
+        temperature:
+          type: number
+          format: float
+          description: Temperature reading in degrees Celsius.
+        cityZone:
+          type: string
+          description: Zone or region of the city where the sensor is located.
+    TrafficEvent:
+      required:
+      - sensorId
+      - timestamp
+      - trafficDensity
+      type: object
+      properties:
+        sensorId:
+          type: string
+          description: Unique identifier for the traffic sensor or camera.
+        timestamp:
+          type: string
+          format: date-time
+          description: Date and time the event was captured.
+        trafficDensity:
+          type: number
+          description: Number of vehicles detected in the area.
+        incidentReport:
+          type: string
+          description: "Description of any incidents (e.g., accident, roadblock)."
+    Stats:
+      type: object
+      required:
+      - num_temperature
+      - num_traffic
+      properties:
+        num_temperature:
+          type: integer
+          example: 100
+        num_traffic:
+          type: integer
+          example: 100

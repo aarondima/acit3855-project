@@ -1,0 +1,88 @@
+openapi: 3.0.0
+info:
+  title: smart-city-api
+  description: The API for the Smart City IOT project
+  version: 1.0.0
+servers:
+- url: /
+paths:
+  /temperature/condition:
+    post:
+      tags:
+      - Temperature
+      summary: Receive temperature readings from sensors
+      description: Endpoint to receive temperature events from IoT sensors deployed across the city.
+      operationId: app.report_temperature
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TemperatureCondition'
+        required: true
+      responses:
+        "200":
+          description: Temperature event received successfully
+        "400":
+          description: Invalid input data
+  /traffic/condition:
+    post:
+      tags:
+      - Traffic
+      summary: Receive traffic density and incident events
+      description: Endpoint to receive traffic-related events from city traffic sensors and cameras.
+      operationId: app.report_traffic
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TrafficCondition'
+        required: true
+      responses:
+        "200":
+          description: Traffic event received successfully
+        "400":
+          description: Invalid input data
+components:
+  schemas:
+    TemperatureCondition:
+      required:
+      - sensorId
+      - temperature
+      - timestamp
+      type: object
+      properties:
+        sensorId:
+          type: string
+          description: Unique identifier for the temperature sensor.
+        timestamp:
+          type: string
+          description: Date and time the reading was captured.
+          format: date-time
+        temperature:
+          type: number
+          description: Temperature reading in degrees Celsius.
+          format: float
+        cityZone:
+          type: string
+          description: Zone or region of the city where the sensor is located.
+    TrafficCondition:
+      required:
+      - sensorId
+      - timestamp
+      - trafficDensity
+      type: object
+      properties:
+        sensorId:
+          type: string
+          description: Unique identifier for the traffic sensor or camera.
+        timestamp:
+          type: string
+          description: Date and time the event was captured.
+          format: date-time
+        trafficDensity:
+          type: number
+          description: Number of vehicles detected in the area.
+        incidentReport:
+          type: string
+          description: "Description of any incidents (e.g., accident, roadblock)."
+    

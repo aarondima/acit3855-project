@@ -1,0 +1,12 @@
+connexion[flask,uvicorn,swagger-ui]
+pykafka
+sqlalchemy
+mysqlclient
+httpx
+apscheduler
+logging
+apscheduler
+datetime
+uuid
+sqlalchemy.orm
+flask

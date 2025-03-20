@@ -1,0 +1,56 @@
+openapi: 3.0.0
+info:
+  title: smart-city-api
+  description: This API provides event stats
+  version: 1.0.0
+servers:
+- url: /
+paths:
+  /stats:
+    get:
+      summary: Gets the event stats
+      operationId: app.get_stats
+      description: Gets processed statistics for temperature and traffic events.
+      responses:
+        "200":
+          description: Successfully returned statistics for temperature and traffic events.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventStats'
+        "400":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+components:
+  schemas:
+    EventStats:
+      required:
+      - num_temperature_readings
+      - max_temperature
+      - num_traffic_readings
+      - max_traffic_density
+      type: object
+      properties:
+        num_temperature_readings:
+          type: integer
+          example: 100000
+          description: Number of temperature readings recorded.
+        max_temperature:
+          type: number
+          format: float
+          example: 45.2
+          description: Highest recorded temperature.
+        num_traffic_readings:
+          type: integer
+          example: 50000
+          description: Number of traffic density readings recorded.
+        max_traffic_density:
+          type: integer
+          example: 200
+          description: Highest recorded traffic density.

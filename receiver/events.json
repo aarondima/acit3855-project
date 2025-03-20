@@ -1,0 +1,48 @@
+{
+    "num_tmp": 500,
+    "recent_tmp": [
+        {
+            "msg_data": "Sensor sensor-1234 with a temperature of 22.5 in Downtown.",
+            "received_timestamp": "2025-01-23 15:56:42.161690"
+        },
+        {
+            "msg_data": "Sensor sensor-1234 with a temperature of 22.5 in Downtown.",
+            "received_timestamp": "2025-01-23 15:56:42.113692"
+        },
+        {
+            "msg_data": "Sensor sensor-1234 with a temperature of 22.5 in Downtown.",
+            "received_timestamp": "2025-01-23 15:56:42.102240"
+        },
+        {
+            "msg_data": "Sensor sensor-1234 with a temperature of 22.5 in Downtown.",
+            "received_timestamp": "2025-01-23 15:56:42.073949"
+        },
+        {
+            "msg_data": "Sensor sensor-1234 with a temperature of 22.5 in Downtown.",
+            "received_timestamp": "2025-01-23 15:56:42.035789"
+        }
+    ],
+    "num_incident": 506,
+    "recent_incident": [
+        {
+            "msg_data": "Camera camera-5678 reported 150 vehicles in Minor accident near intersection..",
+            "received_timestamp": "2025-01-23 15:56:42.267690"
+        },
+        {
+            "msg_data": "Camera camera-5678 reported 150 vehicles in Minor accident near intersection..",
+            "received_timestamp": "2025-01-23 15:56:42.149691"
+        },
+        {
+            "msg_data": "Camera camera-5678 reported 150 vehicles in Minor accident near intersection..",
+            "received_timestamp": "2025-01-23 15:56:42.136690"
+        },
+        {
+            "msg_data": "Camera camera-5678 reported 150 vehicles in Minor accident near intersection..",
+            "received_timestamp": "2025-01-23 15:56:42.125693"
+        },
+        {
+            "msg_data": "Camera camera-5678 reported 150 vehicles in Minor accident near intersection..",
+            "received_timestamp": "2025-01-23 15:56:42.088206"
+        }
+    ]
+}
