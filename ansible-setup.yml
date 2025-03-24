@@ -1,0 +1,70 @@
+- name: Setup Azure VM for Kafka and Docker Services
+  hosts: azure_vm
+  become: true
+  tasks:
+    - name: Update and upgrade packages
+      apt:
+        update_cache: yes
+        upgrade: yes
+
+    - name: Install required packages
+      apt:
+        name:
+          - ca-certificates
+          - curl
+          - gnupg
+        state: present
+
+    - name: Add Docker GPG key
+      shell: |
+        install -m 0755 -d /etc/apt/keyrings
+        curl -fsSL https://download.docker.com/linux/ubuntu/gpg | tee /etc/apt/keyrings/docker.asc
+        chmod a+r /etc/apt/keyrings/docker.asc
+
+    - name: Add Docker repository
+      shell: |
+        echo \
+        "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+        $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+    - name: Update package cache
+      apt:
+        update_cache: yes
+
+    - name: Install Docker and Docker Compose
+      apt:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+          - docker-buildx-plugin
+          - docker-compose-plugin
+        state: present
+
+    - name: Add current user to Docker group
+      user:
+        name: "{{ansible_user}}"
+        groups: docker
+        append: yes
+
+    - name: Clone Git repository
+      git:
+        repo: "git@github.com:aarondima/acit3855-project.git"
+        dest: /home/{{ansible_user}}/acit3855-project
+        key_file: /home/{{ansible_user}}/.ssh/acit3855-git
+        accept_hostkey: yes
+        version: main
+
+    # - name: Ensure correct permissions for Docker
+    #   shell: newgrp docker
+    - name: Ensure logs directory exists with correct permissions
+      file:
+        path: /home/{{ ansible_user }}/acit3855-project/logs
+        state: directory
+        mode: '0777'
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+    - name: Run services with Docker Compose
+      shell: |
+        cd /home/{{ansible_user}}/acit3855-project
+        docker compose up -d

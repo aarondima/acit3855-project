@@ -22,18 +22,24 @@ services:
             KAFKA_ADVERTISED_LISTENERS: INSIDE://kafka:29092,OUTSIDE://kafka:9092
             KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
             KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+            KAFKA_LOG_DIRS: /kafka/kafka-logs
             KAFKA_BROKER_ID: 1
         volumes:
-            - ./data/kafka_data:/var/lib/kafka/kafka-logs
+            - ./data/kafka_data:/kafka/kafka-logs
+            - /var/run/docker.sock:/var/run/docker.sock
         depends_on:
             zookeeper:
                 condition: service_healthy
+        healthcheck:
+            test: ["CMD", "kafka-topics", "--bootstrap-server=kafka:9092", "--list"]
+            interval: 10s
+            timeout: 5s
+            retries: 5
     db:
         image: mysql
         restart: always
         environment:
             MYSQL_RANDOM_ROOT_PASSWORD: 1
-            # Change these below
             MYSQL_DATABASE: 'app-db'
             MYSQL_USER: 'user'
             MYSQL_PASSWORD: 'password'
@@ -45,7 +51,6 @@ services:
             timeout: 5s
             retries: 5
         volumes:
-            # Where our data will be persisted
             - my-db:/var/lib/mysql
 
     receiver:
