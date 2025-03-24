@@ -1,0 +1,7 @@
+---
+env: dev
+kafka_url: localhost:9092
+storage_url: http://localhost:8090
+processing_url: http://localhost:8100
+receiver_url: http://localhost:8080
+analyzer_url: http://localhost:8200

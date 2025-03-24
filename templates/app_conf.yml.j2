@@ -1,0 +1,21 @@
+---
+version: 1
+datastore:
+  user: user
+  password: password
+  hostname: acit3855.mysql.database.azure.com
+  port: 3306
+  db: events
+
+events:
+  hostname: {{ kafka_url }}
+  topic: events
+
+scheduler:
+  period_sec: 5
+
+urls:
+  storage: {{ storage_url }}
+  processing: {{ processing_url }}
+  receiver: {{ receiver_url }}
+  analyzer: {{ analyzer_url }}
