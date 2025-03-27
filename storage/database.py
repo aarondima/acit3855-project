@@ -6,7 +6,9 @@ import os
 load_dotenv()
 app_conf_file = os.getenv("APP_CONF_FILE", "/app/app_conf.yml")
 with open(app_conf_file, 'r') as f:
-    app_config = yaml.safe_load(f.read())
+    # Expand the env variables in the file content
+    config_str = os.path.expandvars(f.read())
+    app_config = yaml.safe_load(config_str)
 
 db_config = app_config['datastore']
 DATABASE_URL = f"mysql://{db_config['user']}:{db_config['password']}@{db_config['hostname']}:{db_config['port']}/{db_config['db']}"
