@@ -133,16 +133,25 @@
     - name: Stop existing Docker containers
       shell: |
         cd {{ project_root }}
-        docker compose down
+        docker compose down -v
       ignore_errors: yes
 
     - name: Run services with Docker Compose
       shell: |
         cd {{ project_root }}
         docker compose up -d
-      environment:
-        KAFKA_URL: "{{ kafka_url }}"
-        STORAGE_URL: "{{ storage_url }}"
-        PROCESSING_URL: "{{ processing_url }}"
-        RECEIVER_URL: "{{ receiver_url }}"
-        ANALYZER_URL: "{{ analyzer_url }}"
+      register: docker_output
+
+    - name: Wait for Kafka to be healthy
+      shell: |
+        docker compose ps kafka | grep "healthy"
+      args:
+        chdir: "{{ project_root }}"
+      register: result
+      until: result.rc == 0
+      retries: 30
+      delay: 10
+
+    - debug:
+        var: docker_output.stderr_lines
+      when: docker_output.stderr is defined
