@@ -18,7 +18,7 @@ import os
 Base.metadata.create_all(bind=engine)
 
 from dotenv import load_dotenv
-
+load_dotenv()
 app_conf_file = os.getenv("APP_CONF_FILE", "/app/app_conf.yml")
 with open(app_conf_file, 'r') as f:
     app_config = yaml.safe_load(f)

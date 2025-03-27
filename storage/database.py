@@ -1,7 +1,11 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 import yaml
-with open('app_conf.yml', 'r') as f:
+from dotenv import load_dotenv
+import os
+load_dotenv()
+app_conf_file = os.getenv("APP_CONF_FILE", "/app/app_conf.yml")
+with open(app_conf_file, 'r') as f:
     app_config = yaml.safe_load(f.read())
 
 db_config = app_config['datastore']
