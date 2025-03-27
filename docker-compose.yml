@@ -1,4 +1,3 @@
-version: '3.8'
 services:
     zookeeper:
         image: wurstmeister/zookeeper
@@ -54,7 +53,7 @@ services:
     receiver:
         build:
             context: ./receiver
-            dockerfile: Dockerfile.yml
+            dockerfile: Dockerfile
         ports:
             - "${RECEIVER_PORT:-8080}:8080"
         environment:
@@ -70,7 +69,7 @@ services:
     storage:
         build:
             context: ./storage
-            dockerfile: Dockerfile.yml
+            dockerfile: Dockerfile
         environment:
             SERVICE_NAME: "storage"
             ENV: ${ENV:-dev}
@@ -87,7 +86,7 @@ services:
     analyzer:
         build:
             context: ./analyzer
-            dockerfile: Dockerfile.yml
+            dockerfile: Dockerfile
         ports:
             - "${ANALYZER_PORT:-8110}:8110"
         environment:
@@ -103,7 +102,7 @@ services:
     processing:
         build:
             context: ./processing
-            dockerfile: Dockerfile.yml
+            dockerfile: Dockerfile
         ports:
             - "${PROCESSING_PORT:-8100}:8100"
         environment:
