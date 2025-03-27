@@ -60,9 +60,9 @@ services:
             SERVICE_NAME: "receiver"
             ENV: ${ENV:-dev}
         volumes:
-            - ./configs/${ENV:-dev}/receiver/app_conf.yml:/app/app_conf.yml
+            - ./configs/${ENV:-dev}/app_conf.yml:/app/app_conf.yml
             - ./configs/log_conf.yml:/app/log_conf.yml
-            - ./logs:/app/logs
+            - ./logs/receiver:/app/logs
         depends_on:
             - kafka
 
@@ -74,9 +74,9 @@ services:
             SERVICE_NAME: "storage"
             ENV: ${ENV:-dev}
         volumes:
-            - ./configs/${ENV:-dev}/storage/app_conf.yml:/app/app_conf.yml
+            - ./configs/${ENV:-dev}/app_conf.yml:/app/app_conf.yml
             - ./configs/log_conf.yml:/app/log_conf.yml
-            - ./logs:/app/logs
+            - ./logs/storage:/app/logs
         depends_on:
             kafka:
                 condition: service_healthy
@@ -93,9 +93,9 @@ services:
             SERVICE_NAME: "analyzer"
             ENV: ${ENV:-dev}
         volumes:
-            - ./configs/${ENV:-dev}/analyzer/app_conf.yml:/app/app_conf.yml
+            - ./configs/${ENV:-dev}/app_conf.yml:/app/app_conf.yml
             - ./configs/log_conf.yml:/app/log_conf.yml
-            - ./logs:/app/logs
+            - ./logs/analyzer:/app/logs
         depends_on:
             - kafka
 
@@ -109,9 +109,9 @@ services:
             SERVICE_NAME: "processing"
             ENV: ${ENV:-dev}
         volumes:
-            - ./configs/${ENV:-dev}/processing/app_conf.yml:/app/app_conf.yml
+            - ./configs/${ENV:-dev}/app_conf.yml:/app/app_conf.yml
             - ./configs/log_conf.yml:/app/log_conf.yml
-            - ./logs:/app/logs
+            - ./logs/processing:/app/logs
             - ./data/processing:/app/data
         depends_on:
             - storage
