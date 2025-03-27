@@ -82,7 +82,6 @@
         - kafka_data
         - processing
         - database
-        - logs
 
     - name: Create configs directory
       file:
@@ -90,6 +89,12 @@
         state: directory
         mode: "0755"
 
+    - name: Create logs directory
+      file:
+        path: "{{ project_root }}/logs"
+        state: directory
+        mode: "0755"
+        
     - name: Copy configuration files to the VM
       copy:
         src: "{{ local_config_dir }}/"
