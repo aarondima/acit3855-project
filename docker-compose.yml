@@ -75,6 +75,10 @@ services:
             SERVICE_NAME: "storage"
             CONFIG_FILE: "/app/app_conf.yml"
             LOG_CONF_FILE: "/app/log_conf.yml"
+            MYSQL_USER: ${MYSQL_USER}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+            MYSQL_HOSTNAME: ${MYSQL_HOSTNAME}
+            MYSQL_DATABASE: ${MYSQL_DATABASE}
         volumes:
             - ./configs/${ENV}/storage/app_conf.yml:/app/app_conf.yml
             - ./configs/log_conf.yml:/app/log_conf.yml
