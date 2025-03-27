@@ -7,8 +7,16 @@ import yaml
 import os
 from connexion.middleware import MiddlewarePosition
 from starlette.middleware.cors import CORSMiddleware
+from dotenv import load_dotenv
 
-with open('log_conf.yml', 'r') as f:
+load_dotenv()
+
+env = os.getenv("ENV", "dev")
+base_config = os.environ.get("APP_CONF_PATH", "/configs")
+
+config_path = os.path.join(base_config, env)
+app_conf_file = os.path.join(config_path, "analyzer/app_conf.yml")
+with open(app_conf_file, 'r') as f:
     log_config = yaml.safe_load(f)
 service_name = os.getenv("SERVICE_NAME", "default_service")
 log_file_path = f"logs/{service_name}.log"

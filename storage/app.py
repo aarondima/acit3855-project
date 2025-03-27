@@ -17,7 +17,17 @@ from flask import jsonify
 import os
 Base.metadata.create_all(bind=engine)
 
-with open('app_conf.yml', 'r') as f:
+from dotenv import load_dotenv
+
+load_dotenv()
+
+env = os.getenv("ENV", "dev")
+base_config = os.environ.get("APP_CONF_PATH", "/configs")
+
+config_path = os.path.join(base_config, env)
+app_conf_file = os.path.join(config_path, "storage/app_conf.yml")
+
+with open(app_conf_file, 'r') as f:
     app_config = yaml.safe_load(f)
 with open('log_conf.yml', 'r') as f:
     log_config = yaml.safe_load(f)

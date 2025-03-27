@@ -9,8 +9,16 @@ import datetime
 from datetime import timezone
 import json
 import os
+from dotenv import load_dotenv
 
-with open('app_conf.yml', 'r') as f:
+load_dotenv()
+
+env = os.getenv("ENV", "dev")
+base_config = os.environ.get("APP_CONF_PATH", "/configs")
+
+config_path = os.path.join(base_config, env)
+app_conf_file = os.path.join(config_path, "receiver/app_conf.yml")
+with open(app_conf_file, 'r') as f:
     app_config = yaml.safe_load(f.read())
 TEMPERATURE_URL = app_config['events']['temperature']['url']
 TRAFFIC_URL = app_config['events']['traffic']['url']
