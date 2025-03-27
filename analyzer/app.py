@@ -11,11 +11,9 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-env = os.getenv("ENV", "dev")
-base_config = os.environ.get("APP_CONF_PATH", "./configs")
-
-config_path = os.path.join(base_config, env)
-app_conf_file = os.path.join(config_path, "analyzer/app_conf.yml")
+base_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.abspath(os.path.join(base_dir))
+app_conf_file = os.path.join(parent_dir, "/app_conf.yml")
 
 # Configurations from app_conf.yml
 with open(app_conf_file, 'r') as f:
