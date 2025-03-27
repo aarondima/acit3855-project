@@ -22,7 +22,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 env = os.getenv("ENV", "dev")
-base_config = os.environ.get("APP_CONF_PATH", "/configs")
+base_config = os.environ.get("APP_CONF_PATH", "./configs")
 
 config_path = os.path.join(base_config, env)
 app_conf_file = os.path.join(config_path, "storage/app_conf.yml")

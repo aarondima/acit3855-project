@@ -59,7 +59,7 @@ services:
         environment:
             SERVICE_NAME: "receiver"
         volumes:
-            - ./configs/${ENV}/receiverapp_conf.yml:/app/app_conf.yml
+            - ./configs/${ENV}/receiver/app_conf.yml:/app/app_conf.yml
             - ./configs/log_conf.yml:/app/log_conf.yml
             - ./logs/receiver:/app/logs
         depends_on:
