@@ -16,7 +16,15 @@ base_config = os.environ.get("APP_CONF_PATH", "/configs")
 
 config_path = os.path.join(base_config, env)
 app_conf_file = os.path.join(config_path, "analyzer/app_conf.yml")
+
+# Configurations from app_conf.yml
 with open(app_conf_file, 'r') as f:
+    app_config = yaml.safe_load(f.read())
+KAFKA_HOST = app_config['events']['hostname']
+KAFKA_PORT = app_config['events']['port']
+KAFKA_TOPIC = app_config['events']['topic']
+
+with open('log_conf.yml', 'r') as f:
     log_config = yaml.safe_load(f)
 service_name = os.getenv("SERVICE_NAME", "default_service")
 log_file_path = f"logs/{service_name}.log"
@@ -27,12 +35,6 @@ logger = logging.getLogger('basicLogger')
 
 logger.info(f"Logging initialized for service: {service_name}")
 
-# Configurations from app_conf.yml
-with open('app_conf.yml', 'r') as f:
-    app_config = yaml.safe_load(f.read())
-KAFKA_HOST = app_config['events']['hostname']
-KAFKA_PORT = app_config['events']['port']
-KAFKA_TOPIC = app_config['events']['topic']
 
 def get_temperature(index):
     index = int(index)  # Ensure index is an integer

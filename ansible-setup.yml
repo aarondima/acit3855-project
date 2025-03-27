@@ -94,18 +94,10 @@
     - name: Copy configuration files to the VM
       copy:
         src: "{{ local_config_dir }}/"
-        dest: "{{ remote_config_dir }}/Prod/"
+        dest: "{{ remote_config_dir }}/prod/"
         owner: azureuser
         group: azureuser
         mode: "0644"
-    # - name: Template service configuration files
-    #   template:
-    #     src: "templates/{{ item }}.j2"
-    #     dest: "{{ config_dir }}/prod/{{ item }}"
-    #     mode: "0644"
-    #   with_items:
-    #     - app_conf.yml
-    #     - log_conf.yml
 
     - name: Copy env file to VM
       template:
@@ -116,7 +108,7 @@
     - name: Set permissions for repository
       file:
         path: "{{ project_root }}"
-        mode: "0777"
+        mode: "0644"
         recurse: yes
         owner: "{{ ansible_user }}"
         group: "{{ ansible_user }}"
