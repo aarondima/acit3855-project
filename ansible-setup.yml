@@ -11,8 +11,6 @@
     local_env_dir: "/mnt/c/Users/aaron/BCIT/Term 4/ACIT3855/project/.env"
     remote_env_dir: "/home/azureuser/acit3855-project/"
 
-    
-
   tasks:
     - name: Update and upgrade packages
       apt:
@@ -84,6 +82,7 @@
         - kafka_data
         - processing
         - database
+        - logs
 
     - name: Create configs directory
       file:
