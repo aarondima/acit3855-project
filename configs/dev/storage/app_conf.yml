@@ -1,0 +1,11 @@
+version: 1
+datastore:
+  user: ${MYSQL_USER}
+  password: ${MYSQL_PASSWORD}
+  hostname: ${MYSQL_HOSTNAME}
+  port: 3306
+  db: ${MYSQL_DATABASE}
+events:
+  hostname: kafka
+  port: 9092
+  topic: events

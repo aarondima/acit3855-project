@@ -1,0 +1,10 @@
+version: 1
+datastore:
+  filename: /app/data/data.json
+scheduler:
+  interval: 5
+eventstores:
+  temperature:
+    url: http://storage:8090/temperature/condition
+  traffic:
+    url: http://storage:8090/traffic/condition

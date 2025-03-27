@@ -6,7 +6,12 @@
     project_root: "/home/{{ansible_user}}/acit3855-project"
     config_dir: "{{ project_root }}/configs"
     repo_url: "git@github.com:aarondima/acit3855-project.git"
-    local_env_dir: "./templates/.env.prod.j2"
+    local_config_dir: "./configs/prod"
+    remote_config_dir: "/home/azureuser/acit3855-project/configs"
+    local_env_dir: "/mnt/c/Users/aaron/BCIT/Term 4/ACIT3855/project/.env"
+    remote_env_dir: "/home/azureuser/acit3855-project/"
+
+    
 
   tasks:
     - name: Update and upgrade packages
@@ -86,14 +91,21 @@
         state: directory
         mode: "0755"
 
-    - name: Template service configuration files
-      template:
-        src: "templates/{{ item }}.j2"
-        dest: "{{ config_dir }}/prod/{{ item }}"
+    - name: Copy configuration files to the VM
+      copy:
+        src: "{{ local_config_dir }}/"
+        dest: "{{ remote_config_dir }}/Prod/"
+        owner: azureuser
+        group: azureuser
         mode: "0644"
-      with_items:
-        - app_conf.yml
-        - log_conf.yml
+    # - name: Template service configuration files
+    #   template:
+    #     src: "templates/{{ item }}.j2"
+    #     dest: "{{ config_dir }}/prod/{{ item }}"
+    #     mode: "0644"
+    #   with_items:
+    #     - app_conf.yml
+    #     - log_conf.yml
 
     - name: Copy env file to VM
       template:
