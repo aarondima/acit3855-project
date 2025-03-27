@@ -58,6 +58,8 @@ services:
             - "8080:8080"
         environment:
             SERVICE_NAME: "receiver"
+            CONFIG_FILE: "/app/app_conf.yml"
+            LOG_CONF_FILE: "/app/log_conf.yml"
         volumes:
             - ./configs/${ENV}/receiver/app_conf.yml:/app/app_conf.yml
             - ./configs/log_conf.yml:/app/log_conf.yml
@@ -71,6 +73,8 @@ services:
             dockerfile: Dockerfile
         environment:
             SERVICE_NAME: "storage"
+            CONFIG_FILE: "/app/app_conf.yml"
+            LOG_CONF_FILE: "/app/log_conf.yml"
         volumes:
             - ./configs/${ENV}/storage/app_conf.yml:/app/app_conf.yml
             - ./configs/log_conf.yml:/app/log_conf.yml
@@ -89,6 +93,8 @@ services:
             - "8110:8110"
         environment:
             SERVICE_NAME: "analyzer"
+            CONFIG_FILE: "/app/app_conf.yml"
+            LOG_CONF_FILE: "/app/log_conf.yml"
         volumes:
             - ./configs/${ENV}/analyzer/app_conf.yml:/app/app_conf.yml
             - ./configs/log_conf.yml:/app/log_conf.yml
@@ -104,6 +110,8 @@ services:
             - "8100:8100"
         environment:
             SERVICE_NAME: "processing"
+            CONFIG_FILE: "/app/app_conf.yml"
+            LOG_CONF_FILE: "/app/log_conf.yml"
         volumes:
             - ./configs/${ENV}/processing/app_conf.yml:/app/app_conf.yml
             - ./configs/log_conf.yml:/app/log_conf.yml

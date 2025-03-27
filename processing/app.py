@@ -16,10 +16,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-base_dir = os.path.dirname(os.path.abspath(__file__))
-parent_dir = os.path.abspath(os.path.join(base_dir))
-app_conf_file = os.path.join(parent_dir, "/app_conf.yml")
-
+app_conf_file = os.getenv("APP_CONF_FILE", "/app/app_conf.yml")
 # Load application configuration
 with open(app_conf_file, 'r') as f:
     app_config = yaml.safe_load(f)
@@ -27,8 +24,10 @@ TEMPERATURE_URL = app_config['eventstores']['temperature']['url']
 TRAFFIC_URL = app_config['eventstores']['traffic']['url']
 stats_file = app_config['datastore']['filename']
 app = Flask(__name__)
+
+log_conf_file = os.getenv("LOG_CONF_FILE", "/app/log_conf.yml")
 # Load logging configuration
-with open("log_conf.yml", 'r') as f:
+with open(log_conf_file, 'r') as f:
     log_config = yaml.safe_load(f)
 service_name = os.getenv("SERVICE_NAME", "default_service")
 log_file_path = f"logs/{service_name}.log"
