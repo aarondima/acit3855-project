@@ -21,8 +21,16 @@ base_config = os.environ.get("APP_CONF_PATH", "/configs")
 
 config_path = os.path.join(base_config, env)
 app_conf_file = os.path.join(config_path, "processing/app_conf.yml")
-# Load logging configuration
+
+# Load application configuration
 with open(app_conf_file, 'r') as f:
+    app_config = yaml.safe_load(f)
+TEMPERATURE_URL = app_config['eventstores']['temperature']['url']
+TRAFFIC_URL = app_config['eventstores']['traffic']['url']
+stats_file = app_config['datastore']['filename']
+app = Flask(__name__)
+# Load logging configuration
+with open("log_conf.yml", 'r') as f:
     log_config = yaml.safe_load(f)
 service_name = os.getenv("SERVICE_NAME", "default_service")
 log_file_path = f"logs/{service_name}.log"
@@ -31,13 +39,6 @@ if "file" in log_config["handlers"]:
 logging.config.dictConfig(log_config)
 logger = logging.getLogger('basicLogger')
 
-# Load application configuration
-with open('app_conf.yml', 'r') as f:
-    app_config = yaml.safe_load(f)
-TEMPERATURE_URL = app_config['eventstores']['temperature']['url']
-TRAFFIC_URL = app_config['eventstores']['traffic']['url']
-stats_file = app_config['datastore']['filename']
-app = Flask(__name__)
 
 def populate_stats():
     logger.info("Periodic processing has started")

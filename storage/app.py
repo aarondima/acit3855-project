@@ -29,6 +29,10 @@ app_conf_file = os.path.join(config_path, "storage/app_conf.yml")
 
 with open(app_conf_file, 'r') as f:
     app_config = yaml.safe_load(f)
+# Configurations from app_conf.yml
+KAFKA_HOST = app_config['events']['hostname'] + ":" + str(app_config['events']['port'])
+KAFKA_TOPIC = app_config['events']['topic']
+
 with open('log_conf.yml', 'r') as f:
     log_config = yaml.safe_load(f)
 service_name = os.getenv("SERVICE_NAME", "default_service")
@@ -38,10 +42,6 @@ if "file" in log_config["handlers"]:
 logging.config.dictConfig(log_config)
 logger = logging.getLogger('basicLogger')
 
-
-# Configurations from app_conf.yml
-KAFKA_HOST = app_config['events']['hostname'] + ":" + str(app_config['events']['port'])
-KAFKA_TOPIC = app_config['events']['topic']
 
 def parse_timestamp(timestamp_str):
     return datetime.fromisoformat(timestamp_str.replace("Z", ""))  

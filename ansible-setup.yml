@@ -121,15 +121,6 @@
         owner: "{{ ansible_user }}"
         group: "{{ ansible_user }}"
 
-    - name: Build and start Docker services
-      community.docker.docker_compose_v2:
-        project_src: "{{ project_root }}"
-        build: always
-        pull: always
-        state: present
-      environment:
-        ENV: prod
-
     - name: Stop existing Docker containers
       shell: |
         cd {{ project_root }}
@@ -139,7 +130,7 @@
     - name: Run services with Docker Compose
       shell: |
         cd {{ project_root }}
-        docker compose up -d
+        docker compose up -d --build
       register: docker_output
 
     - name: Wait for Kafka to be healthy
