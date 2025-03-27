@@ -5,6 +5,8 @@ import logging
 import logging.config
 import yaml
 import os
+from connexion.middleware import MiddlewarePosition
+from starlette.middleware.cors import CORSMiddleware
 
 with open('log_conf.yml', 'r') as f:
     log_config = yaml.safe_load(f)
@@ -86,8 +88,18 @@ def get_stats():
     logger.info(f"Statistics: {stats}")
     return stats, 200
 
-app = connexion.FlaskApp(__name__, specification_dir="")
-app.add_api("AARONDIMA-Smart-City-App-1.0.0.yaml", strict_validation=True, validate_responses=True)
+app = connexion.FlaskApp(__name__, specification_dir='')
+app.add_middleware(
+    CORSMiddleware,
+    position=MiddlewarePosition.BEFORE_EXCEPTION,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+app.add_api("AARONDIMA-Smart-City-App-1.0.0.yaml",
+            strict_validation=True,
+            validate_responses=True)
 
 if __name__ == "__main__":
     app.run(port=8110, host="0.0.0.0")

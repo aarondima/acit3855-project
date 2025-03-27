@@ -1,17 +1,18 @@
 ---
 - name: Setup Environment for Kafka and Docker Services
-  hosts: "{{ target_env | default('dev') }}"
-  become: "{{ env == 'prod' }}"
+  hosts: prod
+  become: yes
   vars:
     project_root: "/home/{{ansible_user}}/acit3855-project"
     config_dir: "{{ project_root }}/configs"
+    repo_url: "git@github.com:aarondima/acit3855-project.git"
+    local_env_dir: "./templates/.env.prod.j2"
 
   tasks:
     - name: Update and upgrade packages
       apt:
         update_cache: yes
         upgrade: yes
-      when: env == "prod"
 
     - name: Install required packages
       apt:
@@ -19,27 +20,29 @@
           - ca-certificates
           - curl
           - gnupg
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+          - docker-buildx-plugin
+          - docker-compose-plugin
         state: present
-      when: env == "prod"
+        update_cache: yes
 
     - name: Add Docker GPG key
       shell: |
         install -m 0755 -d /etc/apt/keyrings
         curl -fsSL https://download.docker.com/linux/ubuntu/gpg | tee /etc/apt/keyrings/docker.asc
         chmod a+r /etc/apt/keyrings/docker.asc
-      when: env == "prod"
 
     - name: Add Docker repository
       shell: |
         echo \
         "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
         $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
-      when: env == "prod"
 
     - name: Update package cache
       apt:
         update_cache: yes
-      when: env == "prod"
 
     - name: Install Docker and Docker Compose
       apt:
@@ -50,18 +53,16 @@
           - docker-buildx-plugin
           - docker-compose-plugin
         state: present
-      when: env == "prod"
 
     - name: Add current user to Docker group
       user:
         name: "{{ansible_user}}"
         groups: docker
         append: yes
-      when: env == "prod"
 
     - name: Clone or update Git repository
       git:
-        repo: "git@github.com:aarondima/acit3855-project.git"
+        repo: "{{ repo_url }}"
         dest: "{{ project_root }}"
         key_file: "~/.ssh/acit3855-git"
         accept_hostkey: yes
@@ -69,25 +70,65 @@
         update: yes
         force: yes
 
-    - name: Create required directories
+    - name: Ensure log directories exist
       file:
-        path: "{{ item }}"
+        path: "{{ project_root }}/logs/{{ item }}"
         state: directory
-        mode: '0777'
-        owner: "{{ ansible_user }}"
-        group: "{{ ansible_user }}"
-      with_items:
-        - "{{ project_root }}/logs"
-        - "{{ project_root }}/data"
+        mode: "0777"
+      loop:
+        - receiver
+        - storage
+        - processing
+        - analyzer
+        - dashboard
+
+    - name: Ensure data directories exist
+      file:
+        path: "{{ project_root }}/data/{{ item }}"
+        state: directory
+        mode: "0777"
+      loop:
+        - kafka_data
+        - processing
+        - database
+
+    - name: Create configs directory
+      file:
+        path: "{{ config_dir }}/prod"
+        state: directory
+        mode: "0755"
 
     - name: Template service configuration files
       template:
         src: "templates/{{ item }}.j2"
-        dest: "{{ config_dir }}/{{ item }}"
-        mode: '0644'
+        dest: "{{ config_dir }}/prod/{{ item }}"
+        mode: "0644"
       with_items:
         - app_conf.yml
         - log_conf.yml
+
+    - name: Copy env file to VM
+      template:
+        src: "{{ local_env_dir }}"
+        dest: "{{ project_root }}/.env"
+        mode: "0644"
+
+    - name: Set permissions for repository
+      file:
+        path: "{{ project_root }}"
+        mode: "0755"
+        recurse: yes
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+
+    - name: Build and start Docker services
+      community.docker.docker_compose_v2:
+        project_src: "{{ project_root }}"
+        build: true
+        pull: true
+        state: present
+      environment:
+        ENV: prod
 
     - name: Stop existing Docker containers
       shell: |

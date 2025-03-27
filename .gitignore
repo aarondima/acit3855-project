@@ -32,6 +32,8 @@ configs/prod_*.yml
 configs/*.prod.*
 .env
 .env.prod
+.env.dev
+!.env.template
 
 # IDE
 .idea/
