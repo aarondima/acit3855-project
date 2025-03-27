@@ -108,7 +108,7 @@
     - name: Set permissions for repository
       file:
         path: "{{ project_root }}"
-        mode: "0644"
+        mode: "0777"
         recurse: yes
         owner: "{{ ansible_user }}"
         group: "{{ ansible_user }}"
