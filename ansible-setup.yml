@@ -70,18 +70,6 @@
         update: yes
         force: yes
 
-    - name: Ensure log directories exist
-      file:
-        path: "{{ project_root }}/logs/{{ item }}"
-        state: directory
-        mode: "0777"
-      loop:
-        - receiver
-        - storage
-        - processing
-        - analyzer
-        - dashboard
-
     - name: Ensure data directories exist
       file:
         path: "{{ project_root }}/data/{{ item }}"
