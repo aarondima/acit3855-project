@@ -21,6 +21,7 @@ services:
             KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
             KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
             KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+            KAFKA_LOG_DIRS: /kafka/kafka-logs
         volumes:
             - ./data/kafka_data:/kafka/kafka-logs
         depends_on:
@@ -99,6 +100,7 @@ services:
             SERVICE_NAME: "analyzer"
             CONFIG_FILE: "/app/app_conf.yml"
             LOG_CONF_FILE: "/app/log_conf.yml"
+            CORS_ALLOW_ALL: no
         volumes:
             - ./configs/${ENV}/analyzer/app_conf.yml:/app/app_conf.yml
             - ./configs/log_conf.yml:/app/log_conf.yml
@@ -116,6 +118,7 @@ services:
             SERVICE_NAME: "processing"
             CONFIG_FILE: "/app/app_conf.yml"
             LOG_CONF_FILE: "/app/log_conf.yml"
+            CORS_ALLOW_ALL: no
         volumes:
             - ./configs/${ENV}/processing/app_conf.yml:/app/app_conf.yml
             - ./configs/log_conf.yml:/app/log_conf.yml
@@ -131,7 +134,6 @@ services:
         ports:
             - "3000:80"
         environment:
-            ENV: ${ENV}
             PROCESSING_URL: ${PROCESSING_URL:-http://processing:8100}
             ANALYZER_URL: ${ANALYZER_URL:-http://analyzer:8110}
         depends_on:
