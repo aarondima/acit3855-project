@@ -13,47 +13,38 @@ function formatDate(date) {
     return new Date(date).toLocaleString();
 }
 
+// Function to safely update an element's text content
+function updateElementText(id, value) {
+    const element = document.getElementById(id);
+    if (element) {
+        element.textContent = value !== undefined ? value : 'N/A';
+    }
+}
+
 // Function to fetch processing stats
 async function fetchProcessingStats() {
     try {
         const response = await fetch(`${PROCESSING_SERVICE_URL}/stats`);
+        if (!response.ok) throw new Error('Failed to fetch processing stats');
+        
         const data = await response.json();
-       
-        document.getElementById('totalEvents').textContent = 
-            (data.num_temperature_readings || 0) + (data.num_traffic_readings || 0);
+        const totalEvents = (data.num_temperature_readings || 0) + (data.num_traffic_readings || 0);
+
+        updateElementText('totalEvents', totalEvents);
+        updateElementText('successEvents', totalEvents);
+        updateElementText('failedEvents', '0'); // Placeholder since failures aren't tracked
+
+        updateElementText('numTemperature', data.num_temperature_readings);
+        updateElementText('maxTemperature', data.max_temperature);
+        updateElementText('numTraffic', data.num_traffic_readings);
+        updateElementText('maxTrafficDensity', data.max_traffic_density);
         
-        // Since your processing service doesn't track failed events directly,
-        // we'll leave this blank or use a placeholder
-        document.getElementById('failedEvents').textContent = '0';
-        
-        document.getElementById('successEvents').textContent =
-            (data.num_temperature_readings || 0) + (data.num_traffic_readings || 0);
-       
         if (data.last_updated) {
-            document.getElementById('lastUpdated').textContent = formatDate(data.last_updated);
-        }
-        
-        // Display additional temperature and traffic metrics if available
-        if (document.getElementById('numTemperature')) {
-            document.getElementById('numTemperature').textContent = data.num_temperature_readings || 0;
-        }
-        
-        if (document.getElementById('maxTemperature')) {
-            document.getElementById('maxTemperature').textContent = data.max_temperature || 0;
-        }
-        
-        if (document.getElementById('numTraffic')) {
-            document.getElementById('numTraffic').textContent = data.num_traffic_readings || 0;
-        }
-        
-        if (document.getElementById('maxTrafficDensity')) {
-            document.getElementById('maxTrafficDensity').textContent = data.max_traffic_density || 0;
+            updateElementText('lastUpdated', formatDate(data.last_updated));
         }
     } catch (error) {
         console.error('Error fetching processing stats:', error);
-        document.getElementById('totalEvents').textContent = 'Error';
-        document.getElementById('failedEvents').textContent = 'Error';
-        document.getElementById('successEvents').textContent = 'Error';
+        ['totalEvents', 'successEvents', 'failedEvents'].forEach(id => updateElementText(id, 'Error'));
     }
 }
 
@@ -61,59 +52,43 @@ async function fetchProcessingStats() {
 async function fetchAnalyzerStats() {
     try {
         const response = await fetch(`${ANALYZER_SERVICE_URL}/stats`);
+        if (!response.ok) throw new Error('Failed to fetch analyzer stats');
+
         const data = await response.json();
-       
-        // Update with analyzer stats - using the event counts from the analyzer service
-        document.getElementById('totalAnalyzed').textContent = 
-            (data.num_temperature || 0) + (data.num_traffic || 0);
-        
-        // Your analyzer doesn't track prices, so repurpose these fields
-        // or replace with more relevant metrics
-        document.getElementById('tempEvents').textContent = data.num_temperature || 0;
-        document.getElementById('trafficEvents').textContent = data.num_traffic || 0;
-        
-        // You might want to rename these labels in your HTML to match the data
-        // For example, change "Max Price" to "Temperature Events"
-        // and "Min Price" to "Traffic Events"
+        const totalAnalyzed = (data.num_temperature || 0) + (data.num_traffic || 0);
+
+        updateElementText('totalAnalyzed', totalAnalyzed);
+        updateElementText('tempEvents', data.num_temperature);
+        updateElementText('trafficEvents', data.num_traffic);
     } catch (error) {
         console.error('Error fetching analyzer stats:', error);
-        document.getElementById('totalAnalyzed').textContent = 'Error';
-        document.getElementById('tempEvents').textContent = 'Error';
-        document.getElementById('trafficEvents').textContent = 'Error';
+        ['totalAnalyzed', 'tempEvents', 'trafficEvents'].forEach(id => updateElementText(id, 'Error'));
     }
 }
 
 // Function to fetch a sample event from the analyzer
 async function fetchSampleEvent() {
     try {
-        const eventTypes = ["TemperatureEvent", "TrafficEvent"];  // Match backend route names
+        const eventTypes = ["TemperatureEvent", "TrafficEvent"];
         const randomType = eventTypes[Math.floor(Math.random() * eventTypes.length)];
-        const randomIndex = Math.floor(Math.random() * 10); // Adjust range as needed
+        const randomIndex = Math.floor(Math.random() * 10);
 
-        let response = await fetch(`http://localhost:8110/${randomType}?index=${randomIndex}`);
+        let response = await fetch(`${ANALYZER_SERVICE_URL}/${randomType}?index=${randomIndex}`);
         let data;
 
-        if (response.ok) {
-            data = await response.json();
-        } else {
-            // Try the other event type if the first one fails
+        if (!response.ok) {
             const fallbackType = randomType === "TemperatureEvent" ? "TrafficEvent" : "TemperatureEvent";
-            response = await fetch(`http://localhost:8110/${fallbackType}?index=${randomIndex}`);
-
-            if (response.ok) {
-                data = await response.json();
-            } else {
-                data = { message: "No events available" };
-            }
+            response = await fetch(`${ANALYZER_SERVICE_URL}/${fallbackType}?index=${randomIndex}`);
         }
 
-        document.getElementById('randomEvent').textContent = JSON.stringify(data, null, 2);
+        data = response.ok ? await response.json() : { message: "No events available" };
+
+        updateElementText('randomEvent', JSON.stringify(data, null, 2));
     } catch (error) {
         console.error('Error fetching sample event:', error);
-        document.getElementById('randomEvent').textContent = JSON.stringify({ error: "Failed to fetch event data" }, null, 2);
+        updateElementText('randomEvent', JSON.stringify({ error: "Failed to fetch event data" }, null, 2));
     }
 }
-
 
 // Function to update all data
 async function updateDashboard() {

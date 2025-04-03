@@ -55,6 +55,8 @@ services:
         image: aarondeod/project_receiver:latest
         # ports:
         #     - "8080:8080"
+        expose:
+            - "8080"
         environment:
             SERVICE_NAME: "receiver"
             CONFIG_FILE: "/app/app_conf.yml"
@@ -90,6 +92,8 @@ services:
         image: aarondeod/project_analyzer:latest
         # ports:
         #     - "8110:8110"
+        expose:
+            - "8110"
         environment:
             SERVICE_NAME: "analyzer"
             CONFIG_FILE: "/app/app_conf.yml"
@@ -106,6 +110,8 @@ services:
         image: aarondeod/project_processing:latest
         # ports:
         #     - "8100:8100"
+        expose:
+            - "8100"
         environment:
             SERVICE_NAME: "processing"
             CONFIG_FILE: "/app/app_conf.yml"
@@ -124,7 +130,7 @@ services:
             context: ./dashboard
             dockerfile: Dockerfile
         ports:
-            - "3000:80"
+            - "8000:80"
         volumes:
             - ./dashboard/nginx.conf:/etc/nginx/conf.d/default.conf
         environment:
