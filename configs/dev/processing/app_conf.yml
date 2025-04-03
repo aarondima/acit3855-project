@@ -5,6 +5,6 @@ scheduler:
   interval: 5
 eventstores:
   temperature:
-    url: http://storage/storage
+    url: http://storage/storage/temperature/condition
   traffic:
-    url: http://storage/storage
+    url: http://storage/storage/traffic/condition

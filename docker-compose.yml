@@ -125,24 +125,16 @@ services:
             dockerfile: Dockerfile
         ports:
             - "3000:80"
+        volumes:
+            - ./dashboard/nginx.conf:/etc/nginx/conf.d/default.conf
         environment:
             PROCESSING_URL: ${PROCESSING_URL:-http://processing:8100}
             ANALYZER_URL: ${ANALYZER_URL:-http://analyzer:8110}
         depends_on:
             - processing
             - analyzer
-    nginx:
-        image: nginx:latest
-        ports:
-            - "80:80"  # Only expose nginx to the outside world
-        volumes:
-            - ./dashboard/nginx.conf:/etc/nginx/conf.d/default.conf  # Mount the custom config
-        depends_on:
-            - receiver
-            - processing
-            - analyzer
             - storage
-            - dashboard
+            - receiver    
 
 volumes:
     my-db:
