@@ -98,7 +98,7 @@ services:
             SERVICE_NAME: "analyzer"
             CONFIG_FILE: "/app/app_conf.yml"
             LOG_CONF_FILE: "/app/log_conf.yml"
-            CORS_ALLOW_ALL: no
+            CORS_ALLOW_ALL: "false"
         volumes:
             - ./configs/${ENV}/analyzer/app_conf.yml:/app/app_conf.yml
             - ./configs/log_conf.yml:/app/log_conf.yml
@@ -116,7 +116,7 @@ services:
             SERVICE_NAME: "processing"
             CONFIG_FILE: "/app/app_conf.yml"
             LOG_CONF_FILE: "/app/log_conf.yml"
-            CORS_ALLOW_ALL: no
+            CORS_ALLOW_ALL: "false"
         volumes:
             - ./configs/${ENV}/processing/app_conf.yml:/app/app_conf.yml
             - ./configs/log_conf.yml:/app/log_conf.yml
