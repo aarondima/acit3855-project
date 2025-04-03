@@ -2,9 +2,9 @@ version: 1
 events:
 events:
   temperature:
-    url: http://storage:8090/storage/temperature/condition
+    url: http://storage/storage/temperature/condition
   traffic:
-    url: http://storage:8090/storage/traffic/condition
+    url: http://storage/storage/traffic/condition
   hostname: kafka
   port: 9092
   topic: events
