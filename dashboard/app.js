@@ -2,6 +2,7 @@ const baseUrl = window.location.hostname === 'localhost'
     ? 'http://localhost' 
     : `http://${window.location.hostname}`;
 
+// No need to add port since everything is going through port 80 now
 const PROCESSING_SERVICE_URL = `${baseUrl}/processing`;
 const ANALYZER_SERVICE_URL = `${baseUrl}/analyzer`;
 
