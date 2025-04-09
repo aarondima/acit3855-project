@@ -80,7 +80,7 @@ def populate_stats():
         stats["last_updated"] = current_time
     
     params = {"start_timestamp": last_updated, "end_timestamp": current_time}
-    
+    logger.info(f"Fetching events from {TEMPERATURE_URL} and {TRAFFIC_URL} with params {params}")
     temperature_response = httpx.get(TEMPERATURE_URL, params=params)
     traffic_response = httpx.get(TRAFFIC_URL, params=params)
     
