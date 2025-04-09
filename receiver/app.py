@@ -92,7 +92,7 @@ def report_traffic(body):
     return NoContent, 201  # Return HTTP 201 Created
 
 app = connexion.FlaskApp(__name__, specification_dir="")
-app.add_api("AARONDIMA-Smart-City-App-1.0.0.yaml", strict_validation=True, validate_responses=True)
+app.add_api("AARONDIMA-Smart-City-App-1.0.0.yaml", strict_validation=True, base_path="/receiver", validate_responses=True)
 
 if __name__ == "__main__":
     app.run(port=8080, host="0.0.0.0")

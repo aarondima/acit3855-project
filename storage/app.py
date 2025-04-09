@@ -168,7 +168,7 @@ def setup_kafka_thread():
     t1.start()
 
 app = connexion.FlaskApp(__name__, specification_dir="")
-app.add_api("AARONDIMA-Smart-City-App-1.0.0.yaml", strict_validation=True, validate_responses=True)
+app.add_api("AARONDIMA-Smart-City-App-1.0.0.yaml", strict_validation=True, base_path="/storage", validate_responses=True)
 
 if __name__ == "__main__":
     setup_kafka_thread()  # Start Kafka consumer in a separate thread
