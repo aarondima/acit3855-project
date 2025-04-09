@@ -1,7 +1,9 @@
+
 /* Configuration for API endpoints */
 const baseUrl = window.location.hostname === 'localhost' 
     ? 'http://localhost' 
     : `http://${window.location.hostname}`;
+
 
 const PROCESSING_SERVICE_URL = `${baseUrl}/processing`;
 const ANALYZER_SERVICE_URL = `${baseUrl}/analyzer`;
@@ -13,6 +15,7 @@ const UPDATE_INTERVAL = 4000;
 function getLocaleDateStr() {
     return new Date().toLocaleString();
 }
+
 
 // Generalized fetch function with error handling
 const makeRequest = async (url) => {
@@ -67,6 +70,7 @@ const updateCodeDiv = (result, elemId) => {
 // Function to fetch processing stats
 async function fetchProcessingStats() {
     try {
+
         const data = await makeRequest(`${PROCESSING_SERVICE_URL}/stats`);
         
         // Update main stats
@@ -89,12 +93,14 @@ async function fetchProcessingStats() {
         updateElementText('totalEvents', 'Error');
         updateElementText('failedEvents', 'Error');
         updateElementText('successEvents', 'Error');
+
     }
 }
 
 // Function to fetch analyzer stats
 async function fetchAnalyzerStats() {
     try {
+
         const data = await makeRequest(`${ANALYZER_SERVICE_URL}/stats`);
         
         // Update analyzer stats
@@ -148,6 +154,7 @@ async function fetchRandomEvent() {
         
     } catch (error) {
         console.error('Error in fetchRandomEvent:', error);
+
     }
 }
 
@@ -159,7 +166,7 @@ async function updateDashboard() {
     await Promise.all([
         fetchProcessingStats(),
         fetchAnalyzerStats(),
-        fetchRandomEvent()
+        fetchSampleEvent()
     ]);
 }
 

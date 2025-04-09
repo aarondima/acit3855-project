@@ -1,7 +1,0 @@
----
-env: prod
-kafka_url: aaron-acit3855-project.canadacentral.cloudapp.azure.com:9092
-storage_url: http://aaron-acit3855-project.canadacentral.cloudapp.azure.com:8090
-processing_url: http://aaron-acit3855-project.canadacentral.cloudapp.azure.com:8100
-receiver_url: http://aaron-acit3855-project.canadacentral.cloudapp.azure.com:8080
-analyzer_url: http://aaron-acit3855-project.canadacentral.cloudapp.azure.com:8200

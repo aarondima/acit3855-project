@@ -95,6 +95,19 @@
         state: directory
         mode: "0777"
 
+    - name: Ensure logs directories have correct ownership
+      file:
+        path: "{{ project_root }}/logs/{{ item }}"
+        state: directory
+        mode: "0777"
+        owner: azureuser
+        group: azureuser
+      loop:
+        - analyzer
+        - processing
+        - receiver
+        - storage
+
     - name: Copy configuration files to the VM
       copy:
         src: "{{ local_config_dir }}/"

@@ -105,6 +105,7 @@ if "CORS_ALLOW_ALL" in os.environ and os.environ["CORS_ALLOW_ALL"] == "yes":
         allow_headers=["*"],
     )
 app.add_api("AARONDIMA-Smart-City-App-1.0.0.yaml",
+            base_path="/analyzer",
             strict_validation=True,
             base_path="/analyzer",
             validate_responses=True)
